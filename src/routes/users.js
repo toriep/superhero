@@ -14,7 +14,6 @@ module.exports = app => {
     })
   });
   router.get('/foods', (req, res) => {
-
     const sorted = usersCopy.sort((a, b) => a.id - b.id);
 
     res.send(sorted);
