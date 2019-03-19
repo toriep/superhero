@@ -14,7 +14,9 @@ module.exports = app => {
     })
   });
   router.get('/foods', (req, res) => {
-    res.send(usersCopy);
+    const sorted = usersCopy.sort((a, b) => a.id - b.id);
+
+    res.send(sorted);
   });
   router.post('/food', [
     check('hero_name').exists(),
