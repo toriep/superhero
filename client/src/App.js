@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import _ from "lodash";
 import './App.css';
+import '../node_modules/react-grid-layout/css/styles.css';
+import '../node_modules/react-resizable/css/styles.css';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -36,7 +38,9 @@ class App extends Component {
   generateDOM () {
     return _.map(this.state.layouts.lg, function(l, i) {
       return (
-        <div key={i} className={l.static ? "static" : ""}>
+        <div key={i} style={{
+          border: '1px solid black'
+        }} className={l.static ? "static" : ""}>
           {l.static ? (
             <span
               className="text"
