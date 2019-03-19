@@ -7,7 +7,7 @@ chai.should();
 
 chai.use(chaiHttp);
 
-describe('Server should be able to perform "/users" operation', () => {
+describe('Server should be able to perform "/users/*" operation', () => {
   it('it should get /users/foods', done => {
     chai.request(server).get('/users/foods').end((err, res) => {
       res.should.have.status(200);
@@ -17,4 +17,4 @@ describe('Server should be able to perform "/users" operation', () => {
       done();
     })
   });
-})
+});
