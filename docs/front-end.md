@@ -19,7 +19,7 @@ Cover the following endpoints:
 
 ### Bonus 
 1. Implement `DELETE` RESTful endpoint.
-2. Currently, there are duplicated super heros returned for `GET` endpoint. Combine them to reduce the response payload size. Be sure this new format will work with the front-end. For example:
+2. Currently, there are duplicated super heros returned from `GET` endpoint. Combine them to reduce the response payload size. Be sure this new format will work with the front-end. For example:
 
 ```
   {
