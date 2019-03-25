@@ -17,7 +17,7 @@ Cover the following endpoints:
 
 *Hint: run `npm run test` to see test example*
 
-### Bonus 
+### Bonus (not required)
 1. Implement `DELETE` RESTful endpoint.
 2. Currently, there are duplicated super heros returned from `GET` endpoint. Combine them to reduce the response payload size. Be sure this new format will work with the front-end. For example:
 
