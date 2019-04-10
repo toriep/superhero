@@ -1,6 +1,8 @@
 const express = require('express');
 const usersOriginal = require('../data/users');
 const { check, validationResult } = require('express-validator/check');
+//instaled to enable CORS for testing purpose
+const cors = require('cors');
 
 module.exports = app => {
   let usersCopy = [ ...usersOriginal ];
@@ -37,6 +39,6 @@ module.exports = app => {
       res.status(422).send(err.toString());
     }
   });
-
+  app.use(cors());
   app.use('/users', router);
 }
