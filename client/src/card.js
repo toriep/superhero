@@ -1,29 +1,29 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component, Fragment } from 'react';
 
 class Card extends Component{
-  state = {
-    superHeroes: []
-  }
 
-  componentDidMount() {
-    const url = 'http://localhost:3001/users/foods';
-    axios.get(url).then((resp)=>{
-      console.log('resp :', resp);
-      this.setState({
-        superHeroes: resp.data
-      })
-    });
+  capitalize = () => {
+    console.log('this.props.hero :', this.props.hero);
   }
 
   render(){
+    const { favorite_food, first_name, hero_name, last_name} = this.props.hero;
     return(
-      <div className="container">
-        <h1>Super Heroes</h1>
-      </div>
+      <Fragment>
+        <div className="row m-3">
+          <div className="col-md-6 p-3">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title">{hero_name}</h2>
+                <p className="card-text">NAME: {`${first_name} ${last_name}`}</p>
+                <p className="card-text">FAVORITE FOOD: {favorite_food}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Fragment>
     )
   }
-  
 }
 
 export default Card;
