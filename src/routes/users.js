@@ -23,6 +23,7 @@ module.exports = app => {
     usersCopy.splice(index,1);
     res.send({
       success: true,
+      message: 'Item deleted',
       usersCopy
     })
   });
@@ -46,6 +47,7 @@ module.exports = app => {
       console.log('req.body :', req.body);
       res.json({
         success: userCount,
+        message: 'Item added',
         usersCopy
       })
     } catch (err) {
