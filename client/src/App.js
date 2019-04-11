@@ -10,11 +10,13 @@ class App extends Component {
     hero_name: '',
     first_name: '',
     last_name: '',
-    favorite_food: ''
+    favorite_food: '',
+    emptyInput: false
   }
 
   componentDidMount() {
     axios.get('http://localhost:3001/users/foods').then((resp)=>{
+      console.log('get resp :', resp);
       this.setState({
         superHeroes: resp.data
       })
@@ -25,18 +27,24 @@ class App extends Component {
     event.preventDefault();
     const { hero_name, first_name, last_name, favorite_food } = this.state;
     if(!hero_name || !first_name || !last_name || !favorite_food){
-      console.log('Fill out all forms');
+      this.setState({
+        emptyInput: true,
+      })
       return;
     }
-    await axios.post('http://localhost:3001/users/food', { hero_name, first_name, last_name, favorite_food }).then((resp)=>{
+    await axios.post('http://localhost:3001/users/food', 
+    { hero_name, first_name, last_name, favorite_food }).then((resp) => {
       this.setState({
-        superHeroes: resp.data.usersCopy
+        superHeroes: resp.data.usersCopy,
+        emptyInput: false,
       })
     });
   }
 
   deleteItem = id => {
-    axios.patch('http://localhost:3001/users/food',{ id }).then((resp)=>{
+    axios.patch('http://localhost:3001/users/food',
+    { id }).then((resp)=>{
+      console.log('delete resp :', resp);
       this.setState({
         superHeroes: resp.data.usersCopy
       })
@@ -47,15 +55,14 @@ class App extends Component {
     const { superHeroes } = this.state;
     const { hero_name, first_name, last_name, favorite_food } = this.state;
     const heroesList = superHeroes.map(index => {
-        console.log('index.id :', index.id);
-        return (
-        <Card key={ index.id } hero={ index } delete={this.deleteItem} />
-        )
+      return (
+      <Card key={ index.id } hero={ index } delete={this.deleteItem} />
+      )
     });
 
     return(
       <div className="container mt-4 p-3">
-        <h1 className="text-center">Super Heroes</h1>
+        <h1 className="text-center">Avengers</h1>
         <form className="" onSubmit={this.handleAddItem}>
           <div className="form-group col-md-6 mx-auto">
             <label>Hero</label>
@@ -86,7 +93,10 @@ class App extends Component {
             className="form-control"/>
           </div>
           <div className="col-md-6 mx-auto text-right">
-            <button type="submit" className="btn btn-primary">Add Hero</button>
+            <p>
+              {this.state.emptyInput ? <span className="text-info">Please fill out all fields to add a superhero</span> : null}
+            </p>
+        <button type="submit" className="btn btn-primary">Add Hero</button>
           </div>
         </form>
         <div className="row m-3">
