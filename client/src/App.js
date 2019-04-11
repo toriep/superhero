@@ -35,12 +35,21 @@ class App extends Component {
     });
   }
 
+  deleteItem = id => {
+    axios.patch('http://localhost:3001/users/food',{ id }).then((resp)=>{
+      this.setState({
+        superHeroes: resp.data.usersCopy
+      })
+    });
+  }
+
   render(){
     const { superHeroes } = this.state;
     const { hero_name, first_name, last_name, favorite_food } = this.state;
     const heroesList = superHeroes.map(index => {
+        console.log('index.id :', index.id);
         return (
-        <Card key={ index.id } hero={ index } />
+        <Card key={ index.id } hero={ index } delete={this.deleteItem} />
         )
     });
 
@@ -76,7 +85,9 @@ class App extends Component {
             value={favorite_food}
             className="form-control"/>
           </div>
-          <button type="submit" className="btn btn-primary">Add Hero</button>
+          <div className="col-md-6 mx-auto text-right">
+            <button type="submit" className="btn btn-primary">Add Hero</button>
+          </div>
         </form>
         <div className="row m-3">
           { heroesList }
