@@ -9,10 +9,21 @@ module.exports = app => {
   let userCount = usersCopy.length;
 
   const router = express.Router();
-  router.delete('/food', (req, res) => {
+  router.patch('/food', [
+    check('id').exists(),
+  ],(req, res) => {
     console.log(req.query); 
+    const { id } = req.body;
+    let index = null;
+    for(let i=0; i<usersCopy.length; i++){
+      if(usersCopy[i].id == id){
+        index = i;
+      }
+    }
+    usersCopy.splice(index,1);
     res.send({
-      success: true
+      success: true,
+      usersCopy
     })
   });
   router.get('/foods', (req, res) => {
