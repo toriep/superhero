@@ -32,10 +32,13 @@ module.exports = app => {
         id: userCount,
         ...req.body
       })
+      console.log('req.body :', req.body);
       res.json({
-        success: userCount
+        success: userCount,
+        usersCopy
       })
     } catch (err) {
+      console.log('Could not add hero');
       res.status(422).send(err.toString());
     }
   });
