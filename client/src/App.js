@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './bootstrap/css/bootstrap.min.css';
-import Card from './Card';
+import './style.css';
+import Card from './Card.js';
 
 class App extends Component {
   state = {
@@ -22,7 +23,11 @@ class App extends Component {
 
   handleAddItem = async (event) => {
     event.preventDefault();
-    const { hero_name, first_name, last_name, favorite_food, superHeroes } = this.state;
+    const { hero_name, first_name, last_name, favorite_food } = this.state;
+    if(!hero_name || !first_name || !last_name || !favorite_food){
+      console.log('Fill out all forms');
+      return;
+    }
     await axios.post('http://localhost:3001/users/food', { hero_name, first_name, last_name, favorite_food }).then((resp)=>{
       this.setState({
         superHeroes: resp.data.usersCopy
@@ -34,53 +39,44 @@ class App extends Component {
     const { superHeroes } = this.state;
     const { hero_name, first_name, last_name, favorite_food } = this.state;
     const heroesList = superHeroes.map(index => {
-      const { favorite_food, first_name, hero_name, last_name } = index;
         return (
         <Card key={ index.id } hero={ index } />
         )
     });
 
     return(
-      <div className="container text-center mt-4 p-3">
-        <h1>Super Heroes</h1>
-        <form onSubmit={this.handleAddItem}>
-          <div className="row">
-            <div className="col s6 offset-s3">
-              <label>Hero</label>
-              <input onChange={(e)=>this.setState({hero_name: e.target.value})} 
-              type="text" 
-              value={hero_name}/>
-            </div>
+      <div className="container mt-4 p-3">
+        <h1 className="text-center">Super Heroes</h1>
+        <form className="" onSubmit={this.handleAddItem}>
+          <div className="form-group col-md-6 mx-auto">
+            <label>Hero</label>
+            <input onChange={(e)=>this.setState({hero_name: e.target.value})} 
+            type="text" 
+            value={hero_name} 
+            className="form-control"/>
           </div>
-          <div className="row">
-            <div className="col s6 offset-s3">
-              <label>First Name</label>
-              <input onChange={({target})=>this.setState({first_name:target.value})}//you can destructure stuff in your paramter
-              type="text" 
-              value={first_name}/>
-            </div>
+          <div className="form-group col-md-6 mx-auto">
+            <label>First Name</label>
+            <input onChange={({target})=>this.setState({first_name:target.value})}
+            type="text" 
+            value={first_name}
+            className="form-control"/>
           </div>
-          <div className="row">
-            <div className="col s6 offset-s3">
-              <label>Last Name</label>
-              <input onChange={({target})=>this.setState({last_name:target.value})}//you can destructure stuff in your paramter
-              type="text" 
-              value={last_name}/>
-            </div>
+          <div className="form-group col-md-6 mx-auto">
+            <label>Last Name</label>
+            <input onChange={({target})=>this.setState({last_name:target.value})}
+            type="text" 
+            value={last_name}
+            className="form-control"/>
           </div>
-          <div className="row">
-            <div className="col s6 offset-s3">
-              <label>Favorite Food</label>
-              <input onChange={({target})=>this.setState({favorite_food:target.value})}//you can destructure stuff in your paramter
-              type="text" 
-              value={favorite_food}/>
-            </div>
+          <div className="form-group col-md-6 mx-auto">
+            <label>Favorite Food</label>
+            <input onChange={({target})=>this.setState({favorite_food:target.value})}
+            type="text" 
+            value={favorite_food}
+            className="form-control"/>
           </div>
-          <div className="row">
-            <div className="col s6 offset-s3 right-align">
-              <button className="btn teal lighten-2">Add Hero</button>
-            </div>
-          </div>
+          <button type="submit" className="btn btn-primary">Add Hero</button>
         </form>
         <div className="row m-3">
           { heroesList }

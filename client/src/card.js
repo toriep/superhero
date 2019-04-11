@@ -14,8 +14,9 @@ class Card extends Component{
             <div className="card">
               <div className="card-body">
                 <h2 className="card-title">{this.capitalize(hero_name)}</h2>
-                <p className="card-text">PLAYED BY: {this.capitalize(`${first_name} ${last_name}`)}</p>
-                <p className="card-text">FAVORITE FOOD: {favorite_food ? this.capitalize(favorite_food) : null}</p>
+                <hr/>
+                <p className="card-text ml-6"><i class="fas fa-user"></i> {this.capitalize(`${first_name} ${last_name}`)}</p>
+                <p className="card-text"><i class="fas fa-utensils"></i> {favorite_food ? this.capitalize(favorite_food) : null}</p>
               </div>
             </div>
           </div>
