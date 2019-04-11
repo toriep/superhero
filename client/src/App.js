@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './bootstrap/css/bootstrap.min.css';
-import './style.css';
 import Card from './Card.js';
 
 class App extends Component {
@@ -16,18 +15,19 @@ class App extends Component {
 
   componentDidMount() {
     axios.get('http://localhost:3001/users/foods').then((resp)=>{
-      console.log('get resp :', resp);
       this.setState({
         superHeroes: resp.data
       })
     });
   }
 
-  handleAddItem = async (event) => {
+  handleAddItem = async event => {
     event.preventDefault();
     const { hero_name, first_name, last_name, favorite_food } = this.state;
+    //Show info box if any input field is empty when submitting
     if(!hero_name || !first_name || !last_name || !favorite_food){
       this.setState({
+        //a value of true will display the info box on the screen
         emptyInput: true,
       })
       return;
@@ -44,7 +44,6 @@ class App extends Component {
   deleteItem = id => {
     axios.patch('http://localhost:3001/users/food',
     { id }).then((resp)=>{
-      console.log('delete resp :', resp);
       this.setState({
         superHeroes: resp.data.usersCopy
       })
@@ -56,17 +55,17 @@ class App extends Component {
     const { hero_name, first_name, last_name, favorite_food } = this.state;
     const heroesList = superHeroes.map(index => {
       return (
-      <Card key={ index.id } hero={ index } delete={this.deleteItem} />
+      <Card key={ index.id } hero={ index } thanosDeletes={()=>this.deleteItem(index.id)} />
       )
     });
 
     return(
-      <div className="container mt-4 p-3">
+      <div className="container mt-4">
         <h1 className="text-center">Avengers</h1>
-        <form className="" onSubmit={this.handleAddItem}>
+        <form onSubmit={this.handleAddItem}>
           <div className="form-group col-md-6 mx-auto">
             <label>Hero</label>
-            <input onChange={(e)=>this.setState({hero_name: e.target.value})} 
+            <input onChange={({target})=>this.setState({hero_name:target.value})}
             type="text" 
             value={hero_name} 
             className="form-control"/>
@@ -94,13 +93,15 @@ class App extends Component {
           </div>
           <div className="col-md-6 mx-auto text-right">
             <p>
-              {this.state.emptyInput ? <span className="text-info">Please fill out all fields to add a superhero</span> : null}
+              {this.state.emptyInput ? <span className="text-danger">Please fill out all fields to add a superhero</span> : null}
             </p>
-        <button type="submit" className="btn btn-primary">Add Hero</button>
+        <button type="submit" className="btn btn-primary">Add</button>
           </div>
         </form>
-        <div className="row m-3">
-          { heroesList }
+        <div className="spaceBetween">
+          <div className="row m-3">
+            { heroesList }
+          </div>
         </div>
       </div>
     )

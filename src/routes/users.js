@@ -1,21 +1,19 @@
 const express = require('express');
 const usersOriginal = require('../data/users');
 const { check, validationResult } = require('express-validator/check');
-//instaled to enable CORS for testing purpose
-const cors = require('cors');
+const cors = require('cors'); //instaled to enable CORS for testing purpose
 
 module.exports = app => {
   let usersCopy = [ ...usersOriginal ];
   let userCount = usersCopy.length;
 
   const router = express.Router();
-  router.patch('/food', [
+  router.patch('/food', [  //switch to patch to obtain item's id in the request's body
     check('id').exists(),
   ],(req, res) => {
-    console.log(req.query); 
     const { id } = req.body;
     let index = null;
-    for(let i=0; i<usersCopy.length; i++){
+    for(let i=0; i<usersCopy.length; i++){//find the index of the item in usersCopy array that matches the id
       if(usersCopy[i].id == id){
         index = i;
       }
