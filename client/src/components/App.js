@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './bootstrap/css/bootstrap.min.css';
+import '../bootstrap/css/bootstrap.min.css';
 import Card from './Card.js';
 
 class App extends Component {
